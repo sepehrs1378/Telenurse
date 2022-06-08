@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+   api:
+      build:
+         context: .
+         dockerfile: Dockerfile
+      command: python manage.py runserver 0.0.0.0:8000
+      volumes:
+         - .:/app
+      ports:
+         - 8000:8000
+      env_file:
+         - .env
+      restart: "on-failure"
+      depends_on:
+         - postgres-db
+      networks:
+         - core
+
+   postgres-db:
+      image: kartoza/postgis:12.1
+      ports:
+         - 5432:5432
+      volumes:
+         - postgres_data:/var/lib/postgresql
+      environment:
+         - POSTGRES_USER=${POSTGRES_USER}
+         - POSTGRES_PASS=${POSTGRES_PASS}
+         - POSTGRES_DBNAME=${POSTGRES_DBNAME}
+      restart: "on-failure"
+      networks:
+         - core
+
+   pgbackups:
+      image: prodrigestivill/postgres-backup-local
+      restart: always
+      volumes:
+         - ./postgres_backups:/backups
+      links:
+         - postgres-db:postgres-db
+      depends_on:
+         - postgres-db
+      environment:
+         - POSTGRES_HOST=postgres-db
+         - POSTGRES_USER=${POSTGRES_USER}
+         - POSTGRES_PASSWORD=${POSTGRES_PASS}
+         - POSTGRES_DB=${POSTGRES_DBNAME}
+         - POSTGRES_EXTRA_OPTS=-Z9 --schema=public --blobs
+         - SCHEDULE=@every 12h0m0s
+         - BACKUP_KEEP_DAYS=2
+         - BACKUP_KEEP_WEEKS=2
+         - BACKUP_KEEP_MONTHS=2
+         - HEALTHCHECK_PORT=81
+      networks:
+         - core
+
+networks:
+   core:
+      driver: bridge
+
+volumes:
+   postgres_data: null

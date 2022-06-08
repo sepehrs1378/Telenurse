@@ -1,0 +1,247 @@
+.grid-container {
+    /*background-color: red;*/
+    display: grid;
+    /*grid-column-gap: 10px;*/
+    grid-template-columns:1fr 1fr
+    /*grid-template-rows: 50px 5em min-content auto;*/
+}
+
+.solution_card ul {
+    padding: 20px;
+    list-style-type: circle;
+}
+
+.solution_card ul li {
+    color: black;
+}
+
+
+.section_our_solution .row {
+    align-items: center;
+    /*width: 100%;*/
+    background-color: yellow;
+}
+
+.our_solution_category {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.our_solution_category .solution_cards_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.solution_cards_box .solution_card {
+    flex: 0 50%;
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+    0 5px 15px 0 rgba(37, 44, 97, 0.15);
+    border-radius: 15px;
+    margin: 8px;
+    padding: 10px 15px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    min-height: 265px;
+    transition: 0.7s;
+}
+
+.solution_cards_box .solution_card.finished_task {
+    background: rgb(171, 190, 184);
+}
+
+
+.solution_cards_box .solution_card.active_task {
+    background: rgb(255, 222, 251);
+}
+
+
+.solution_cards_box .solution_card:hover {
+    /* background: #309df0; */
+    background-color: #4b494d;
+    color: #fff;
+    transform: scale(1.1);
+    z-index: 9;
+    cursor: pointer;
+}
+
+.solution_cards_box .solution_card:hover::before {
+    background: rgb(85 108 214 / 10%);
+}
+
+.solution_cards_box .solution_card:hover .solu_title h3,
+.solution_cards_box .solution_card:hover .solu_description li {
+    color: #fff;
+}
+
+.solution_cards_box .solution_card .solu_description li {
+    color: black;
+}
+
+
+.solution_cards_box .solution_card:before {
+    content: "";
+    position: absolute;
+    background: rgb(85 108 214 / 5%);
+    width: 170px;
+    height: 400px;
+    z-index: -1;
+    transform: rotate(42deg);
+    right: -56px;
+    top: -23px;
+    border-radius: 35px;
+}
+
+.solution_cards_box .solution_card:hover .solu_description button {
+    background: #fff !important;
+    color: #309df0;
+}
+
+.solution_card .so_top_icon {
+}
+
+.solution_card .solu_title h3 {
+    color: #212121;
+    font-size: 1.3rem;
+    margin-top: 13px;
+    margin-bottom: 13px;
+}
+
+.solution_card .solu_description li {
+    /*font-size: 15px;*/
+    /*margin-bottom: 15px;*/
+}
+
+.solution_card .solu_description button {
+    border: 0;
+    border-radius: 15px;
+    /*background: linear-gradient(*/
+    /*        140deg,*/
+    /*        #42c3ca 0%,*/
+    /*        #42c3ca 50%,*/
+    /*        #42c3cac7 75%*/
+    /*) !important;*/
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 5px 16px;
+}
+
+.our_solution_content h1 {
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+
+.hover_color_bubble {
+    position: absolute;
+    background: rgb(54 81 207 / 15%);
+    /*width: 100rem;*/
+    height: 100rem;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    top: 16rem;
+    border-radius: 50%;
+    transform: rotate(-36deg);
+    left: -18rem;
+    transition: 0.7s;
+}
+
+.solution_cards_box .solution_card:hover .hover_color_bubble {
+    top: 0rem;
+}
+
+.solution_cards_box .solution_card .so_top_icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #fff;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.solution_cards_box .solution_card .so_top_icon img {
+    width: 40px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.form-control {
+    display: block !important;
+    width: 100% !important;
+    padding: .375rem .75rem !important;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+    color: #495057 !important;
+    background-color: #fff !important;
+    background-clip: padding-box !important;
+    border: 1px solid #ced4da !important;
+    border-radius: .25rem !important;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out !important;
+    resize: both !important;
+    max-height: none !important;
+}
+
+#modal-submit-review {
+    background: #27293d;
+    border: 0;
+    position: relative;
+    width: 100%;
+    margin-bottom: 30px;
+    box-shadow: 0 1px 20px 0px rgb(0 0 0 / 10%);
+}
+
+#modal-submit-review > div.modal-body > form > label {
+    color: rgba(255, 255, 255, 0.8);;
+}
+
+#id_review {
+    background-color: #5b586063 !important;
+    color: #ffffff !important;
+    border: 1px solid #5b586063 !important;
+}
+
+
+/*start media query*/
+@media screen and (min-width: 320px) {
+    .sol_card_top_3 {
+        position: relative;
+        top: 0;
+    }
+
+    .our_solution_category {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .our_solution_category .solution_cards_box {
+        flex: auto;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .our_solution_category .solution_cards_box {
+        flex: 1;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .sol_card_top_3 {
+        position: relative;
+        top: -3rem;
+    }
+
+    .our_solution_category {
+        /*background-color: #00a685;*/
+        width: 50%;
+        margin: 0 auto;
+    }
+}

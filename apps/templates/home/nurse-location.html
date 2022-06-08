@@ -1,0 +1,142 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% load humanize %}
+
+{% block extra_head %}
+    <style>
+        #map {
+            height: 400px;
+            margin: 16px 125px 16px 16px;
+        }
+    </style>
+{% endblock extra_head %}
+{% load humanize %}
+{% block title %} Locations {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block onloadcall %}init_theme('{{ request.user.username }}');line_startup();{% endblock onloadcall %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="{% static 'assets/css/home/nurse-location.css' %}">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-tasks">
+                <div class="card-header">
+                    <h1 class="card-title"> Locations </h1>
+                </div>
+                <div id="map"></div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table tablesorter " id="">
+                            <thead class=" text-primary">
+                            <tr>
+                                <th></th>
+                                <th>
+                                    First Name
+                                </th>
+                                <th>
+                                    Last Name
+                                </th>
+                                <th>
+                                    Username
+                                </th>
+                                <th>
+                                    Phone Number
+                                </th>
+                                <th>
+                                    Ad ID
+                                </th>
+                                <th>
+                                   
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for nurse_ad in active_ads %}
+                                    <tr>
+                                        <td>
+                                            <div class="photo card avatar">
+                                                <img src="{{ nurse_ad.nurse.get_avatar_url }}" alt="Profile Photo">
+                                            </div>
+                                        </td>
+                                       
+                                        <td>
+                                            {{ nurse_ad.nurse.first_name }}
+                                        </td>
+                                        <td>
+                                            {{ nurse_ad.nurse.last_name }}
+                                        </td>
+                                        <td>
+                                            {{ nurse_ad.nurse.username }}
+                                        </td>
+                                        <td>
+                                            {{ nurse_ad.nurse.phone_number }}
+                                        </td>
+                                        <td>
+                                            {{ nurse_ad.ad.id }}
+                                        </td>
+
+                                        <td>
+                                            <button type="button" class="btn btn-fill btn-secondry" 
+                                                onclick="toggleDetails('{{nurse_ad.id}}')">
+                                                Toggle Details
+                                            </button>
+                                            <button type="button" class="btn btn-fill btn-primary" 
+                                                onclick="setNurseId('{{nurse_ad.nurse.id}}')">
+                                                Show Last Location on Map
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr id="details-{{nurse_ad.id}}" hidden>
+                                        <td colspan="7">
+                                            <div class="solu_description">
+                                                <ul>
+                                                    
+                                                    <li><b>Requested Service:</b> {{ nurse_ad.ad.get_service_type_display }}</li>
+                                                    <li><b>Urgency:</b> {{ nurse_ad.ad.get_urgency_display }}</li>
+                
+                                                    <li><b>Gender:</b> {{ nurse_ad.ad.get_gender_display }}</li>
+                                                    <li><b>Phone Number:</b> {{ nurse_ad.ad.phone_number }}</li>
+                
+                                                    <li><b>Start Time:</b> {{ nurse_ad.ad.start_time }}</li>
+                                                    <li><b>End Time:</b> {{ nurse_ad.ad.end_time }}</li>
+
+                                                    <li><b>Description:</b> {{ nurse_ad.ad.description }}</li>
+                                                    
+                                                    <li><b>Address:</b> {{ nurse_ad.ad.address.details }}</li>
+
+                                                    <li><b>Price:</b> {{ nurse_ad.ad.price|intcomma }} IRR</li>
+
+                                                    {% if nurse_ad.ad.address.location %}
+                                                    <button type="button" class="btn btn-secondry" 
+                                                        onclick="locate_position('{{nurse_ad.ad.address.location.y}}', '{{nurse_ad.ad.address.location.x}}', true)">
+                                                        Show on map
+                                                    </button>
+                                                    {% endif %}
+                
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+           {% load static %}
+        <script src="{% static 'assets/js/nurse-location.js' %}"></script>
+{% endblock javascripts %}
